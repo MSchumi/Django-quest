@@ -1,0 +1,27 @@
+{% for comment in comments_list %}
+<div class="comment-item" data-token='{{comment.id}}'>
+    <a class="answer-anthor-link-avatar pull-left" href="#" data-token='{{comment.user.id}}'><img class="img-anthor-avatar" src='/static/image/msc.jpg'></a>
+    <div class="comment-content-wrap">
+        <div class="comment-content-head">
+            <a>{{comment.user.surname}}{{comment.user.name}}</a>
+        </div>
+        <div class="comment-content">
+            {{comment.content}}
+        </div>
+        <div class="comment-content-foot">
+            <span>{{comment.addtime}}</span>
+            <a href="#">回复
+            {{if comment.touser}}
+            <a data-token='{{comment.touser.id}}'>{{comment.touser.surname}}{{comment.touser.name}}</a>
+            </a>
+            <span class="like-num">{{comment.favorcount}}赞</span>
+        </div>
+        <div class="comment-edit-box-append">
+            <div class="comment-edit-area" contenteditable="true"></div>
+            <div class="comment-action-area comment-append-action">
+                <a class="command-cancel">取消</a> <a href="#" class="btn btn-primary btn-sm" role="button">提交</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}

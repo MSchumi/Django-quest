@@ -1,0 +1,175 @@
+{% extends "base.html" %}
+<!DOCTYPE html>
+    {% block css%}
+    <link href="/static/css/main.css" rel="stylesheet">
+    <link href="/static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/static/css/question.css">
+    {% endblock %}
+            {% block main%}
+            <div class="col-sm-9 blog-main">
+                <div class="question-list" id="question-list">
+                    <div class="question-category">
+                        <a href="/topic/100" class="question-tag">{{question.category}}</a>
+                    </div>
+                    <div class="question-title">
+                        <h2 class="question-title-content">
+                            {{question.title}}
+                        </h2>
+                    </div>
+                    <div class="question-content-wrap">
+                        <div class="question-content">
+                            {{question.content}}
+                        </div>
+                    </div>
+                    <div class="question-panel">
+                    </div>
+                    <div class="answers-title">
+                        <h3 class="answer-num">
+                            共{{question.answercount}}个回答
+                        </h3>
+                    </div>
+                    <div class="answer-list">
+                      {% include 'answerlist.html' %}
+                    </div>
+                </div>
+                <div class="answer-edit-box">
+                    <div class="btn-toolbar" data-role="editor-toolbar" data-target="#editor">
+                        <div class="btn-group">
+                            <a class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown" title="Font">
+                                <i class="icon-font">
+                          </i>
+                                <b class="caret">
+                          </b>
+                            </a>
+                            <ul class="dropdown-menu">
+                            </ul>
+                        </div>
+                        <div class="btn-group">
+                            <a class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown" title="Font Size">
+                                <i class="icon-text-height">
+                          </i>
+                                &nbsp;
+                                <b class="caret">
+                          </b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a data-edit="fontSize 5">
+                                        <font size="5">
+                                            Huge
+                                        </font>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a data-edit="fontSize 3">
+                                        <font size="3">
+                                            Normal
+                                        </font>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a data-edit="fontSize 1">
+                                        <font size="1">
+                                            Small
+                                        </font>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="btn-group">
+                            <a class="btn btn-default btn-sm" data-edit="bold" title="Bold (Ctrl/Cmd+B)">
+                                <i class="icon-bold">
+                          </i>
+                            </a>
+                            <a class="btn btn-default btn-sm" data-edit="italic" title="Italic (Ctrl/Cmd+I)">
+                                <i class="icon-italic">
+                          </i>
+                            </a>
+                            <a class="btn btn-default btn-sm" data-edit="strikethrough" title="Strikethrough">
+                                <i class="icon-strikethrough">
+                          </i>
+                            </a>
+                            <a class="btn btn-default btn-sm" data-edit="underline" title="Underline (Ctrl/Cmd+U)">
+                                <i class="icon-underline">
+                          </i>
+                            </a>
+                        </div>
+                        <div class="btn-group">
+                            <a class="btn btn-default btn-sm" data-edit="insertunorderedlist" title="Bullet list">
+                                <i class="icon-list-ul">
+                          </i>
+                            </a>
+                            <a class="btn btn-default btn-sm" data-edit="insertorderedlist" title="Number list">
+                                <i class="icon-list-ol">
+                          </i>
+                            </a>
+                            <a class="btn btn-default btn-sm" data-edit="outdent" title="Reduce indent (Shift+Tab)">
+                                <i class="icon-indent-left">
+                          </i>
+                            </a>
+                            <a class="btn btn-default btn-sm" data-edit="indent" title="Indent (Tab)">
+                                <i class="icon-indent-right">
+                          </i>
+                            </a>
+                        </div>
+                        <div class="btn-group">
+                            <a class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown" title="Hyperlink">
+                                <i class="icon-link">
+                          </i>
+                            </a>
+                            <div class="dropdown-menu input-append" style="width:230px">
+                                <input class="span3" placeholder="URL" type="text" data-edit="createLink" />
+                                <button class="btn" type="button">
+                                    Add
+                                </button>
+                            </div>
+                            <a class="btn btn-default btn-sm" data-edit="unlink" title="Remove Hyperlink">
+                                <i class="icon-cut">
+                          </i>
+                            </a>
+                        </div>
+                        <div class="btn-group">
+                            <a class="btn btn-default btn-sm" title="Insert picture (or just drag & drop)" id="pictureBtn">
+                                <i class="icon-picture">
+                          </i>
+                            </a>
+                            <input type="file" data-role="magic-overlay" data-target="#pictureBtn" data-edit="insertImage" style="opacity: 0; position: absolute; top: 0px; left: 0px; width: 41px; height: 34px;" />
+                        </div>
+                        <div class="btn-group">
+                            <a class="btn btn-default btn-sm" data-edit="undo" title="Undo (Ctrl/Cmd+Z)">
+                                <i class="icon-undo">
+                          </i>
+                            </a>
+                            <a class="btn btn-default btn-sm" data-edit="redo" title="Redo (Ctrl/Cmd+Y)">
+                                <i class="icon-repeat">
+                          </i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="answer-edit-wrap">
+                        <div id="editor" class="answer-edit-area">
+                            Go ahead&hellip;
+                        </div>
+                    </div>
+                    <div class="comment-action-area comment-append-action">
+                        <a href="#" class="btn btn-primary btn-sm" role="button" id="subAnswer">
+                      发布
+                  </a>
+                    </div>
+                </div>
+            </div>
+            {% endblock %}
+            {% block side %}
+            <div class="col-sm-3 blog-sidebar">
+                {% if user.is_authenticated %}
+                {% ifnotequal question.user_id user.id %}<div>
+                    <button class="btn follow-question {% if not question.followed %}btn-success">关注{% else %}btn-default followed">取消关注{% endif %}</button>
+                </div>
+                {% endifnotequal %}
+                {% endif %}
+            </div>
+            {% endblock %}
+    {% block js%}
+    <script src="/static/js/question.js"></script>
+    <script src="/static/js/bootstrap-wysiwyg.js"></script>
+    {% endblock %}

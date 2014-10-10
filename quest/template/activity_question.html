@@ -1,0 +1,17 @@
+{% load eventtag %}
+{% if question %}
+<div class='question-user-info'>
+        <a href="{{fuser.get_absolute_url}}"><img src='{{fuser.avatar}}' class='user-photo'></a>
+</div>
+<div class='question-info'>
+ <span class="content-time">{{activity.addtime|eventtime}}</span>
+    <span class="op-type">
+        <a href="{{fuser.get_absoulte_url}}">{{fuser.get_full_name}}&nbsp</a>{{activity.activitytype|eventtype:activity.data}}</span>
+<div class="question-title" data-token={{answer.question.id}}>
+    <h2 class="question-title-content">
+        <a href="/question/{{question.id}}">{{question.title}}</a>
+    </h2>
+</div>
+</div>
+{% endif%}
+

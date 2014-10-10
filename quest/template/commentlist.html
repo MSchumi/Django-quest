@@ -1,0 +1,30 @@
+{% for comment in comments_list %}
+<div class="comment-item" data-token='{{comment.id}}' user-token='{{comment.user.id}}'>
+    <a class="answer-anthor-link-avatar pull-left" href="{{comment.user.get_absolute_url}}" data-token='{{comment.user.id}}'><img class="img-anthor-avatar" src='{{comment.user.avatar}}'></a>
+    <div class="comment-content-wrap">
+        <div class="comment-content-head">
+            <a href="{{comment.user.get_absolute_url}}" >{{comment.user.get_full_name}}</a>{% ifnotequal comment.touser.id comment.user.id %}
+            回复<a href="{{comment.touser.get_absolute_url}}">{{comment.touser.get_full_name}}</a>
+            {% endifnotequal %}
+        </div>
+        <div class="comment-content">
+            {{comment.content|safe}}
+        </div>
+        <div class="comment-content-foot">
+            <span>{{comment.addtime}}</span>
+            {% ifequal comment.user.id user.id %}<a href="#" class="delete_comment">删除</a>{% else %}<a href="#" class="replay_comment">回复
+          <!--   {% if comment.touser %}
+            <a data-token='{{comment.touser.id}}'>{{comment.touser.surname}}{{comment.touser.name}}</a>
+            {% endif %} -->
+            </a>{% endifequal %}
+            <span class="like-num">{{comment.favorcount}}赞</span>
+        </div>
+        <div class="comment-edit-box-append" style="display:none">
+            <div class="comment-edit-area" contenteditable="true"></div>
+            <div class="comment-action-area comment-append-action">
+                <a class="command-cancel">取消</a> <a href="#" class="btn btn-primary btn-sm" role="button">提交</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}

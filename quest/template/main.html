@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load activitytag %}
+{% load eventtag %}
+{% block css%}
+<link href="/static/css/main.css" rel="stylesheet">
+{% endblock %}
+
+        {% block main %}
+        <div class="col-sm-8 blog-main">
+          <div class="question-list" id="question-list">
+              {% if questions %}
+               {% include "question_list.html" %}
+              {% else %}
+                {% for activity in activity_list %}
+                  <div class="content-item">
+                    <div>
+                        {% activity_html activity %}
+                    </div>
+                  </div>
+                {% endfor %}
+            {% endif %}
+          </div>
+
+        </div><!-- /.blog-main -->
+        {% endblock %}
+
+   {% block js %}
+    <script src="/static/js/main.js" ></script>
+    {% endblock %}
+

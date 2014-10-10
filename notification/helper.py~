@@ -1,0 +1,9 @@
+import redis
+
+def add_message():
+    passs
+
+def is_read():
+    pass
+
+

@@ -1,0 +1,8 @@
+{% if question %}
+<div class="question-title" data-token={{answer.question.id}}>
+    <h2 class="question-title-content">
+        <a href="{{question.get_absolute_url}}}">{{question.title}}</a>
+    </h2>
+</div>
+{% endif%}
+

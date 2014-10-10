@@ -1,0 +1,38 @@
+{% load questionfilter %}
+{% for question in questions %}
+<div class='question-item' data-token={{question.id}}>
+	<div class='question-user-info'>
+		<a><img src='question.user.avatar' class='user-photo'></a>
+	</div>
+	<div class='question-info'>
+		<div class='title'>
+			<span class='float-right'>精品内容</span><a href='#' class='user-link'>{{question.user.surname}}{{question.user.name}}</a><span class='bull'>&amp;bull</span><a href='#' class='user-follow'>关注他</a>
+		</div>
+		<div class='content'>
+			<h2>
+			<a href=/question/{{question.id}}>{{question.title|safe}}</a>
+			</h2>
+			{% if question.answer.content %}
+			<div class='entry-body'>
+				<div class='vote'>
+					<a href='javascript:;'>{{question.answer.favorcount|convertnum}}</a>
+				</div>
+				<div class='vote-op'>
+					<button class='up'><span class='label'>赞同</span><span class='count'>{{question.answer.favorcount|convertnum}}</span></button><button class='down'><span class='label'>反对,不会显示你的姓名</span></button>
+				</div>"+ "
+				<div class='rich-text'>
+					<div class='full-content hidden'>
+						{{question.answer.content|safe|convertempty}}
+					</div>
+					<div class='summary'>{{question.answer.content|safe|summarize:200}}<a class='toggle-expand'>显示全部</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class='meta-panel'>
+			<a href='' class='question-follow'>关注问题</a><a href='#'>{{question.answer.commentcount}}条评论</a><a href=''>感谢</a><a href=''>分享</a><a class='fold-content'>收起</a>
+		</div>
+		{% endif %}
+	</div>
+</div>
+{% endfor %}

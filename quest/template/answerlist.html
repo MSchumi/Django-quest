@@ -1,0 +1,69 @@
+{% for answer in answers_list%}
+<div class="answer-item" data-token="{{answer.id}}" {% if answer.eid %} eid="{{answer.eid}}" {% endif %}>
+    <div class="votebar" vote="{{answer.favorcount}}" >
+        <button class="up{% if answer.evaluation == 1 %} voted{% endif %}" title="赞同">
+            <i class="vote-arrow">
+            </i>
+            <span class="lable">
+                赞同
+            </span>
+            <span class="vote-count">
+                {{answer.favorcount}}
+            </span>
+        </button>
+        <button class="down{% if answer.evaluation == 2 %} voted{% endif %}" title="反对">
+            <i class="vote-arrow">
+            </i>
+            <span class="lable">
+                取消赞同
+            </span>
+        </button>
+    </div>
+    <div class="answer-head" data-token="{{answer.user.id}}">
+        <div class="answer-anthor">
+            <h3 class="answer-anthor-wrap">
+                <a class="answer-anthor-link-avatar" href="{{answer.user.get_absolute_url}}">
+                    <img class="answer-anthor-avatar" src='{{answer.user.avatar}}'>
+                    </img>
+                </a>
+                <a href="{{answer.user.get_absolute_url}}">
+                    {{answer.user.get_full_name}}
+                </a>
+            </h3>
+        </div>
+        <div class="answer-vote-info">
+        </div>
+    </div>
+    <div class="answer-content clearfix">
+        {{answer.content|safe}}
+    </div>
+    <div class="answer-action panel-wrap clearfix">
+        <div class="answer-panel action-panel">
+            <span class="answer-date-wrap">
+                <a href="#" class="answer-date">
+                    发布于{{answer.addtime|date:"Y-n-d"}}
+                </a>
+            </span>
+            {% if answer.commentcount %}
+            <a href="#" class="showComment" count='{{answer.commentcount}}'>
+                {{answer.commentcount}}条评论
+            </a>
+            {% else %}
+            <a href="#" class="showComment" count='0'>
+                添加评论
+            </a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="comment-box" style="display:none">
+        <div class="comment-list">
+        </div>
+        <div class="comment-edit-box">
+            <div class="comment-edit-area" contenteditable="true"></div>
+            <div class="comment-action-area">
+                <a class="command-cancel">取消</a> <a href="#" class="btn btn-primary btn-sm submitComment" role="button">提交</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor%}

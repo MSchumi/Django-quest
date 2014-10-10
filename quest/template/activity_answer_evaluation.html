@@ -1,0 +1,87 @@
+{% load eventtag %}
+{% if evaluation %}
+<div class='question-user-info'>
+        <a href="{{fuser.get_absolute_url}}"><img src='{{fuser.avatar}}' class='user-photo'></a>
+</div>
+<div class='question-info'>
+    <span class="content-time">{{activity.addtime|eventtime}}</span>
+    <span class="op-type">
+        <a href="{{fuser.get_absoulte_url}}">{{fuser.get_full_name}}</a>{{activity.activitytype|eventtype:activity.data}}</span>
+<div class="question-title" data-token={{answer.question.id}}>
+    <h2 class="question-title-content">
+        <a href="{{answer.question.get_absolute_url}}">{{answer.question.title}}</a>
+    </h2>
+</div>
+<div class="answer-item" data-token="{{evaluation.answer.id}}">
+    <div class="votebar hidden" vote="{{evaluation.answer.evaluation}}" >    
+        <button class="up{% if evaluation.status == 1 %} voted{% endif %}" title="赞同">
+            <i class="vote-arrow">
+            </i>
+            <span class="lable">
+                赞同
+            </span>
+            <span class="vote-count">
+                {{evaluation.answer.favorcount}}
+            </span>
+        </button>
+        <button class="down{% if evaluation.status == 2 %} voted{% endif %}" title="反对">
+            <i class="vote-arrow">
+            </i>
+            <span class="lable">
+                取消赞同
+            </span>
+        </button>
+    </div>
+    <div class="votebar">
+        <button class="vote-num">{% if evaluation.status == 1 %}{{evaluation.answer.favorcount}}{% else %}{{evaluation.answer.opposecount}}{% endif %}</button>
+    </div>
+    <div class="answer-head">
+        <div class="answer-anthor">
+            <h3 class="answer-anthor-wrap">
+                <a class="answer-anthor-link-avatar" href="#">
+                    <img class="answer-anthor-avatar" src='/static/image/msc.jpg'>
+                    </img>
+                </a>
+                <a>
+                    {{evaluation.answer.user.surname}}{{evaluation.answer.user.name}}
+                </a>
+            </h3>
+        </div>
+        <div class="answer-vote-info">
+        </div>
+    </div>
+    <div class="answer-content clearfix">
+        {{evaluation.answer.content|safe}}
+    </div>
+    <div class="answer-action panel-wrap clearfix">
+        <div class="answer-panel action-panel">
+            <span class="answer-date-wrap">
+                <a href="#" class="answer-date">
+                    发布于{{evaluation.answer.addtime|date:"Y-n-d"}}
+                </a>
+            </span>
+            {% if evaluation.answer.commentcount %}
+            <a href="#" class="showComment" count='{{evaluation.answer.commentcount}}'>
+                {{evaluation.answer.commentcount}}条评论
+            </a>
+            {% else %}
+            <a href="#" class="showComment" count='0'>
+                添加评论
+            </a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="comment-box" style="display:none">
+        <div class="comment-list">
+        </div>
+        <div class="comment-edit-box">
+            <div class="comment-edit-area" contenteditable="true"></div>
+            <div class="comment-action-area">
+                <a class="command-cancel">取消</a> <a href="#" class="btn btn-primary btn-sm submitComment" role="button">提交</a>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endif%}
+

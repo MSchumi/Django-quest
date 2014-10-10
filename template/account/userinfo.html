@@ -1,0 +1,256 @@
+{% load eventtag %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="assets/ico/favicon.ico">
+    
+    <title>F1论坛</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap theme -->
+    <!-- Custom styles for this template -->
+    <link href="/static/css/navbar.css" rel="stylesheet">
+    <link href="/static/css/jquery.autocomplete.css" rel="stylesheet">
+    <link href="/static/css/tcss.css" rel="stylesheet">
+    <link href="/static/css/external/prettify.css" rel="stylesheet">
+    <link href="/static/css/font-awesome.css" rel="stylesheet">
+    <link href="/static/css/index.css" rel="stylesheet">
+    <link href="/static/css/userinfo.css" rel="stylesheet">
+   
+    <!-- Just for debugging purposes. Don't actually copy this line! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+
+    </style>
+  </head>
+    <!-- Fixed navbar -->
+<div class="navbar navbar-fixed-top nav-theme" role="navigation">
+        <div class="nav-container">
+            <div class="navbar-header">
+                <a class="navbar-brand nav-active" href="#">F1论坛</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <form class="navbar-form" role="form">
+                    <input type="text" placeholder="搜索话题、问题或人" class="form-control nav-search" id="nav-search">
+                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#quest">提问</button>
+                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#topic">添加话题</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+    <!--/.nav-collapse -->
+
+    <div class="container user" role="main" data-token="{{userinfo.id}}">
+        <div class="row">
+            <div class="col-sm-8 blog-main">
+                <div class="main-container">
+                <div class="user-container">
+                        <div class="userinfo-main" >
+                            <div class="top" >
+                                <span>{{userinfo.surname}}{{userinfo.name}}</span>
+                            </div>
+                            <div class="body">
+                                <div class="user-avatar">
+                                    <img src="{{userinfo.avatar}}" class="user-img">
+                                </div>
+                                <form method="post" style="display:none" action="../upload/image/" target="avtar_up_frame" enctype="multipart/form-data" >
+                                {% csrf_token %}
+                                    <input type="file" name="avat_file" id="avat_file" accept="image/*"  /> 
+                                    <input type="text" value="111" />
+                                    <input type="submit" value="上传"/> 
+                                </form>
+                                
+                                <div class="user-data" >
+                                    <div class="items">
+                                        <div class="item">
+                                            <i class="icon"></i>
+                                            <span class="wrap">
+                                                <span>居住地</span>
+                                                <span>行业</span>
+                                                <span>性别</span>
+                                            </span>
+                                        </div>
+                                         <div class="item">
+                                            <i class="icon"></i>
+                                            <span class="wrap">
+                                                <span>居住地</span>
+                                                <span>行业</span>
+                                                <span>性别</span>
+                                            </span>
+                                        </div>
+                                         <div class="item">
+                                            <i class="icon"></i>
+                                            <span class="wrap">
+                                                <span>居住地</span>
+                                                <span>行业</span>
+                                                <span>性别</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="user-description">
+                                        <span class="info-empty-wrap">填写个人简介</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="user-op clearfix">
+                            <div class="user-op-list">
+                                <span>获得</span>
+                                <span>赞同</span>
+                            </div>
+                            <a class="user-description-link">
+                                <i></i>
+                                编辑我的个人资料
+                            </a>
+                        </div>
+                        <div class="user-navbar clearfix">
+                            <a class="nav-item first">
+                                <i class="icon"></i>
+                                <span>主页</span>
+                            </a>
+                             <a class="nav-item">
+                                提问
+                                <span class="num">{{statistics.submit_question}}</span>
+                            </a>
+                             <a class="nav-item">
+                                回答
+                                <span>{{statistics.answer}}</span>
+                            </a>
+                             <a class="nav-item">
+                                收藏
+                                <span>3</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ask-container-wrap">
+                        <div class="ask-container-head">
+                            <span class="title">最新动态</span>
+                        </div>
+                        <div class="ask-container-body">
+                            <div class="content-list">
+                                {% for event in events_list %}
+                                <div class="content-item">
+                                    <span class="content-time">{{event.addtime|eventtime}}</span>
+
+                                    <span class="op-type">{{event.eventtype|eventtype:event.data}}</span>
+                                    <div>
+                                        {% event_html events_list %}
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3 blog-sidebar">
+                {% if not is_self %}<div>
+                    <button class="btn follow-user {% if not is_followed %}btn-success">关注{% else %}btn-default followed">取消关注{% endif %}</button>
+                </div>
+                {% endif %}
+                <div class="sidebar-module sidebar-module-inset">
+                    <h4>About</h4>
+                    <p>Etiam porta
+                        <em>sem malesuada magna</em>mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
+                </div>
+            </div>
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container -->
+
+<div class="blog-footer">
+        <p>Blog template built for <a href="http://getbootstrap.com">Bootstrap</a> by <a href="https://twitter.com/mdo">@mdo</a>.</p>
+        <p>
+            <a href="#">Back to top</a>
+            </p>
+    </div>
+    <div class="modal fade" id="quest" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close btn-large" data-dismiss="modal" aria-hidden="true" style="margin-top:-10px;">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel" style="margin-top:-10px">提问</h4>
+                </div>
+                <div class="modal-body">
+                    <form role="form">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="question-title" placeholder="写下你的问题">
+                        </div>
+                        <div class="form-group">
+                            <label>问题说明（可选）：</label>
+                            <textarea class="form-control" id="question-content" rows="4"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <div>
+                                <span style="float:right">话题越精准，越容易让领域专业人士看到你的问题</span>选择话题
+                            </div>
+                            <input type="text" class="form-control" id="question-category" placeholder="搜索话题">
+                        </div>
+                        <div class="form-actions">
+                            <div class="question-action">
+                                <a href="#" class="btn" data-dismiss="modal">关闭</a>
+                                <a href="#" class="btn btn-primary" id="questionBtn">发布</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <div class="modal fade" id="topic" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">提问</h4>
+                </div>
+                <form role="form">
+                    <div class="form-group">
+                        <label for="topic_title">标题</label>
+                        <input type="text" name="topic_title" id="topic_title" class="form-control" placeholder="标题">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="topicBtn">添加</button>
+                    </div>
+                </form>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <iframe  name="avtar_up_frame" src="about:blank" id="avtar_up_frame" class="avatar_up_frame"></iframe>
+    <!-- /.modal -->
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="/static/js/jquery-1.9.0.js"></script>
+    <script src="/static/js/jquery.autocomplete.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/external/jquery.hotkeys.js"></script>
+    <script src="/static/js/external/google-code-prettify/prettify.js"></script>
+    <script type="text/javascript" src="/static/js/bootstrap-wysiwyg.js"></script>
+    <!--<script src="/static/js/main.js" ></script>-->
+    <script src="/static/js/tab.js"></script>
+    <script src="/static/js/csrf.js"></script>
+    <script src="/static/js/modal.js"></script>
+    <script src="/static/js/tooltip.js"></script>
+    <script src="/static/js/userinfo.js"></script>
+
+</html>

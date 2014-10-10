@@ -1,0 +1,16 @@
+{% for answer in data %}
+<div class="result_item">
+	<div class="question-part">
+		<a href="{{answer.question.get_absolute_url}}">{{answer.question.title|safe}}</a>
+	</div>
+	<div class="answer-part">
+		<span class="favour-count">{{answer.favorcount}}票</span>&nbsp;&nbsp;
+		<a href="{{answer.user.get_absolute_url}}"><span class="answer-user">{{answer.user.get_full_name}}</span></a>：
+		<span class="answer_summary">{{answer.content|safe|truncatewords:3}}</span>
+		<a target="_blank" href="{{answer.question.get_absolute_url}}" class="check">查看</a>
+	</div>
+	<div class="search_panel">
+		<a href="{{answer.question.get_absolute_url}}">{{answer.question.answercount}}个回答</a><a>100个关注</a>
+	</div>
+</div>
+{% endfor %}

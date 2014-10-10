@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block css%}
+<link href="/static/css/search.css" rel="stylesheet">
+{% endblock %}
+
+        {% block main %}
+        <input type="hidden" id="searchword" value="{{searchword}}" >
+        <input type="hidden" id="searchtype" value="{{searchtype}}" >
+        <div class="col-sm-8 blog-main">
+          <ul class="nav nav-tabs" role="tablist" id="search-tab">
+            <li id="question_tab" type="question" role="presentation"><a href="javascript:">问题</a></li>
+            <li id="answer_tab" type="answer" role="presentation"><a href="javascript:">回答</a></li>
+            <li id="user_tab" type="user" role="presentation"><a href="javascript:">用户</a></li>
+          </ul>
+          <div class="result-list" id="result-list">
+            {% ifequal searchtype "user" %}
+            {% include "search_user.html" %}
+            {% else %}
+            {% ifequal searchtype "question" %}
+            {% include "search_question.html" %}
+            {% else %}
+            {% include "search_answer.html" %}
+            {% endifequal %}
+            {% endifequal %}
+          </div>
+
+        </div><!-- /.blog-main -->
+        {% endblock %}
+        {% block side %}
+        
+        {% endblock %}
+   {% block js %}
+    <script src="/static/js/search.js" ></script>
+    {% endblock %}
+

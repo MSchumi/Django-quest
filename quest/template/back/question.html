@@ -1,0 +1,770 @@
+{% load questfilter %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="assets/ico/favicon.ico">
+    
+    <title>F1论坛</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap theme -->
+    <!-- Custom styles for this template -->
+    <link href="/static/css/navbar.css" rel="stylesheet">
+    <link href="/static/css/jquery.autocomplete.css" rel="stylesheet">
+    <link href="/static/css/tcss.css" rel="stylesheet">
+    <link href="/static/css/external/google-code-prettify/prettify.css" rel="stylesheet">
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.css" rel="stylesheet">
+
+    <link href="/static/css/index.css" rel="stylesheet">
+    <!-- Just for debugging purposes. Don't actually copy this line! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+	 <style>
+   body,input,button{
+    font-size: 13px;
+    line-height: 1.7;
+    color:#222;
+    font-family: 'Helvetica Neue',Helvetica,Arial,Sans-serif;
+    padding: 0;
+    margin: 0;
+    word-wrap: break-word;
+
+   }
+  .question-action{
+  float:right;
+  }
+  .form-actions:after{
+  content:" ";
+  display:table;
+  clear:both;
+  }
+  .modal-header{
+  background-color:#1575d5;
+  color: #fff;
+  border-radius:6px 6px 0 0;
+  height:40px;
+  border: 1px solid #0D6EB8;
+  box-shadow: 0 1px 0 rgba(255,255,255,.1) inset,0 1px 1px rgba(0,0,0,.2);
+  margin: -1px -1px 0;  
+  }
+  .question-tag{
+    background-color: #eff6fa;
+    padding: 1px 10px 0px;
+    border-radius: 30px;
+    margin: 0px 5px 5px 0px;
+    text-decoration: none;
+    display: inline-block;
+  }
+  a{
+
+    color:#259;
+  }
+  .question-title{
+
+    margin: 0px 0px 5px 0px;
+  }
+  .question-content{
+
+  }
+  .question-content-wrap{
+    margin-bottom: 15px;
+  }
+  .answer-head{
+    min-height: 25px;
+  }
+  .answer-panel a{
+    color: #999;
+    vertical-align: middle;
+    display: inline-block;
+    margin-left: 7px;
+    text-decoration: none;
+    cursor: auto;
+
+  }
+  i,em{
+    font-style: italic;
+    line-height: 10px;
+  }
+  .answer-anthor-wrap{
+    font-size: 13px;
+    margin: 0px 0px 1px;
+    font-weight: 700;
+
+  }
+  .answer-anthor-wrap a{
+    color: inherit;
+  }
+  h1,h2,h3,h4{
+    font-weight: 700;
+    font-size: 14px;
+    outline: 0;
+    margin: 0;
+  }
+  .answers-title{
+    position: relative;
+    padding: 15px 0;
+    line-height: 24px;
+    border-top: 1px solid #eee;
+  }
+  .answer-item{
+    border-bottom: 1px solid #eee;
+    padding: 10px 0px 5px;
+  }
+  .answer-list{
+    border-top: 1px solid #eee;
+  }
+  .answer-vote-info{
+    margin: 3px 0px;
+  }
+  .panel-wrap{
+    position: relative;
+    margin-bottom: 5px;
+    color: #999;
+
+  }
+  .action-panel{
+    padding: 5px 0;
+    margin-bottom: -5px;
+    background: #fff;
+  }
+  .votebar{
+    position: absolute;
+    left: -50px;
+  }
+  .votebar .vote-arrow{
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+    font-size: 0;
+  }
+  .votebar .up,.votebar .down{
+    display: block;
+    color: #698ebf;
+    height: 24px;
+    line-height: 24px;
+    width: 38px;
+    border-radius: 3px;
+    border: 0;
+    cursor: pointer;
+    background: #eff6fa;
+    font-weight: 700;
+    font-weight: 500;
+    position: relative;
+  }
+  .votebar .up{
+    height: 44px;
+    line-height: 24px;
+  }
+  .votebar .down{
+    margin: 5px 0 0;
+  }
+  .votebar .up .vote-arrow{
+    border-top-width: 0;
+    border-bottom-color: #698ebf;
+    border-top-style: solid;
+  }
+  .votebar .down .vote-arrow{
+    border-bottom-width: 0;
+    border-top-color: #698ebf;
+  }
+  .vote-count{
+    position: absolute;
+    top: 18px;
+    left: 0;
+    width: 100%;
+  }
+  .votebar .lable{
+    display: block;
+    text-indent: -9999px;
+  }
+  .question-list{
+    position: relative;
+  }
+  .vote-arrow{
+
+    display: inline-block;
+  }
+  .answer-anthor-avatar{
+    float: right;
+    height:25px;
+    width:25px;
+  }
+  .question-title-content{
+    font-size:18px;
+    line-height: 1.7;
+  }
+  .comment-edit-area{
+    padding: 7px 8px;
+    font-size: 13px;
+    line-height: 22px;
+    min-height: 22px;
+/*    white-space: pre-wrap;
+    word-wrap: break-word;*/
+    color: #222;
+    cursor: text;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.1) inset;
+    background-color: #fff;
+  }
+  .comment-action-area{
+    text-align: right;
+    padding: 15px 0px;
+  }
+  .img-anthor-avatar{
+    height:25px;
+    width:25px;
+
+  }
+  .answer-anthor-link-avatar{
+    height:25px;
+    width:25px;
+  }
+  .comment-box{
+    margin: 10px 0 35px;
+    background: #fff;
+    max-width: 610px; 
+    position: relative;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 1px 1px rgba(0,0,0,.05);
+  }
+  .comment-item{
+    position: relative;
+    margin: 0 12px;
+    padding: 8px 0;
+    border-top: solid 1px #eee;
+  }
+  .comment-content-wrap{
+    margin: 0 0 0 35px;
+  }
+  .comment-edit-box{
+    background: #fbfbfb;
+    border-radius: 0 0 4px 4px;
+    border-top: 1px solid #EEE;
+    position: relative;
+    padding: 15px;
+  }
+  .command-cancel{
+    margin: 0 15px 0 0;
+  }
+  .comment-edit-box-append{
+    position: relative;
+    padding: 15px 0;
+
+  }
+  .comment-append-action{
+    padding: 5px 0 0 0;
+  }
+  .like-num{
+    float: right;
+  }
+  .answer-edit-box{
+    
+  }
+  .btn-toolbar{
+    cursor: default;
+outline: 0;
+position: relative;
+zoom: 1;
+margin: 0;
+padding: 4px;
+border: 1px solid #CCC;
+border-bottom: 0;
+border-radius: 3px 3px 0 0;
+background: #f1f1f1;
+box-shadow: inset 0 1px 0 rgba(255,255,255,.4);
+  }
+  .answer-edit-wrap{
+    position: relative;
+padding: 8px 10px;
+border: 1px solid #ccc;
+border-radius: 0 0 3px 3px;
+box-shadow: 0 0 4px 0 rgba(0,0,0,.1) inset;
+background: #fff;
+  }
+  .answer-edit-area{
+    min-height: 88px;
+background: #fff;
+font-size: 13px;
+cursor: text;
+outline: 0;
+  }
+  </style>
+  </head>
+
+  <body role="document">
+
+    <!-- Fixed navbar -->
+    <div class="navbar  navbar-fixed-top nav-theme" role="navigation">
+      <div class="nav-container">
+        <div class="navbar-header">
+          <a class="navbar-brand nav-active" href="#">F1论坛</a>
+        </div>
+        <div class="navbar-collapse collapse">
+           <form class="navbar-form" role="form">
+            <input type="text" placeholder="搜索话题、问题或人" class="form-control nav-search" id="nav-search">
+            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#quest">提问</button>
+			      <button type="button" class="btn btn-success" data-toggle="modal" data-target="#topic">添加话题</button>
+          </form>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+     <div class="container" role="main" data-token="{{question.id}}">
+      <div class="row">
+        <div class="col-sm-8 blog-main">
+        <div class="question-list" id="question-list">
+          <div class="question-category">
+            <a href="/topic/100" class="question-tag">{{question.category}}</a>
+          </div>
+          <div class="question-title">
+            <h2 class="question-title-content" >{{question.title}}</h2>
+          </div>
+          <div class="question-content-wrap">
+            <div class="question-content">{{question.content}}</div>
+          </div>
+          <div class="question-panel"></div>
+          <div class="answers-title">
+            <h3 class="answer-num">10个回答</h3>
+          </div>
+          <div class="answer-list">
+            <div class="answer-item">
+              <div class="votebar">
+                <button class="up" title="赞同">
+                  <i class="vote-arrow"></i>
+                  <span class="lable">赞同</span>
+                  <span class="vote-count">12</span>
+                </button>
+                <button class="down" title="反对">
+                  <i class="vote-arrow"></i>
+                  <span class="lable">取消赞同</span>
+                </button>
+              </div>
+              <div class="answer-head">
+                <div class="answer-anthor">
+                  <h3 class="answer-anthor-wrap">
+                    <a class="answer-anthor-link-avatar" href="#">
+                      <img class="answer-anthor-avatar" src='/static/image/msc.jpg' ></img>
+                    </a>
+                    <a>王子元，做欧美App Store应用的，认真生活，做出…</a>
+                  </h3>
+                </div>
+                <div class="answer-vote-info"></div>
+              </div>
+              <div class="answer-content clearfix">
+                SNS本质上是人与人之间的交互，因此不应被应用平台限制，而HTML技术正好可以支持跨平台。这也许是两者存在联系的地方吧。
+              </div>
+              <div class="answer-action panel-wrap clearfix">
+                <div class="answer-panel action-panel">
+                  <span class="answer-date-wrap">
+                    <a href="#" class="answer-date">发布于2014-7-10</a>
+                  </span>
+                  <a href="#" class="addcomment">
+                    1条评论
+                  </a>
+                </div>
+              </div>
+              <div class="comment-box">
+                <div class="comment-list">
+                  <div class="comment-item">
+                    <a class="answer-anthor-link-avatar pull-left" href="#">
+                      <img class="img-anthor-avatar" src='/static/image/msc.jpg' ></img>
+                    </a>
+                    <div class="comment-content-wrap">
+                      <div class="comment-content-head">
+                        <a>王子元</a>
+                      </div>
+                      <div class="comment-content">
+                          html5实现一个视频网站 评论 上传功能有指导么？。 谢谢。。 
+                          <br/>Bacjbone可以实现么 谢谢了。。
+                      </div>
+                      <div class="comment-content-foot">
+                        <span>2014-07-15</span>
+                        <a href="#">
+                          回复
+                        </a>
+                        <span class="like-num">6赞</span>
+                      </div>
+                       <div class="comment-edit-box-append">
+                          <div class="comment-edit-area"  contenteditable="true" >
+                          </div>
+                          <div class="comment-action-area comment-append-action">
+                            <a class="command-cancel">取消</a>
+                            <a href="#" class="btn btn-primary btn-sm" role="button">提交</a>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="comment-item">
+                    <a class="answer-anthor-link-avatar pull-left" href="#">
+                      <img class="img-anthor-avatar" src='/static/image/msc.jpg' ></img>
+                    </a>
+                    <div class="comment-content-wrap">
+                      <div class="comment-content-head">
+                        <a>王子元</a>
+                      </div>
+                      <div class="comment-content">
+                          html5实现一个视频网站 评论 上传功能有指导么？。 谢谢。。 
+                          <br/>Bacjbone可以实现么 谢谢了。。
+                      </div>
+                      <div class="comment-content-foot">
+                        <span>2014-07-15</span>
+                        <a href="#">
+                          回复
+                        </a>
+                        <span class="like-num">6赞</span>
+                      </div>
+                       <div class="comment-edit-box-append">
+                          <div class="comment-edit-area"  contenteditable="true" >
+                          </div>
+                          <div class="comment-action-area comment-append-action">
+                            <a class="command-cancel">取消</a>
+                            <a href="#" class="btn btn-primary btn-sm" role="button">提交</a>
+                        </div>
+                      </div>
+                    </div>
+                    
+                  </div>
+                </div>
+                <div class="comment-edit-box">
+                  <div class="comment-edit-area"  contenteditable="true" >
+                  </div>
+                  <div class="comment-action-area">
+                    <a class="command-cancel">取消</a>
+                    <a href="#" class="btn btn-primary btn-sm" role="button">提交</a>
+                  </div>
+                  <div></div>
+                </div>
+              </div>
+            </div>
+            <div class="answer-item">
+              <div class="votebar">
+                <button class="up" title="赞同">
+                  <i class="vote-arrow"></i>
+                  <span class="lable">赞同</span>
+                  <span class="vote-count">12</span>
+                </button>
+                <button class="down" title="反对">
+                  <i class="vote-arrow"></i>
+                  <span class="lable">取消赞同</span>
+                </button>
+              </div>
+              <div class="answer-head">
+                <div class="answer-anthor">
+                  <h3 class="answer-anthor-wrap">
+                    <a class="answer-anthor-avatar">
+                      <img src=""></img>123
+                    </a>
+                    <a>王子元，做欧美App Store应用的，认真生活，做出…</a>
+                  </h3>
+                </div>
+                <div class="answer-vote-info"></div>
+              </div>
+              <div class="answer-content clearfix">
+                就你的标题来说，结果还是sns，技术只是实现手段，可能会增加对sns在各个平台下的各种体验，但本质就是sns，不会变成其他。你所说的“如何满足SNS的用户体验需求”，你首先得先知道最基本的sns需求和再从中挖掘潜在的需求，然后才考虑能否用该技术实现这样的需求体验，这个问题最终会变成细节和技术实现可行性问题，不能针对html5和sns来做解答，所以我觉得没有答案。产品的核心我觉得是创造价值，不管是对用户还是创造它的人，对用户可以简单的说是使用价值，对公司是通过它提供的价值得到回报。有人可能会说，产品的核心是用户，我觉得用户是提升产品价值的一个考量和价值的体现。解释下我的想法，核心就是一个东西最重要部分，没有它会死，一开始，一个产品可能完全没有用户，那么用户怎么来？那是它对用户有价值，所以，创造价值便成了它的核心，当有用户了，根据需求创造更多的附加价值，来让更多用户使用或增加粘度，其本质也是创造价值。有点唯产品论，欢迎讨论^_^
+              </div>
+              <div class="answer-action panel-wrap clearfix">
+                <div class="answer-panel action-panel">
+                  <span class="answer-date-wrap">
+                    <a href="#" class="answer-date">发布于2014-7-10</a>
+                  </span>
+                  <a href="#" class="addcomment">
+                    1条评论
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="answer-edit-box">
+            <div class="btn-toolbar" data-role="editor-toolbar" data-target="#editor">
+          <div class="btn-group">
+            <a class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown" title="Font"><i class="icon-font"></i><b class="caret"></b></a>
+            <ul class="dropdown-menu">
+            </ul>
+          </div>
+          <div class="btn-group">
+            <a class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown" title="Font Size"><i class="icon-text-height"></i>&nbsp;<b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a data-edit="fontSize 5"><font size="5">Huge</font></a></li>
+              <li><a data-edit="fontSize 3"><font size="3">Normal</font></a></li>
+              <li><a data-edit="fontSize 1"><font size="1">Small</font></a></li>
+            </ul>
+          </div>
+          <div class="btn-group">
+            <a class="btn btn-default btn-sm" data-edit="bold" title="Bold (Ctrl/Cmd+B)"><i class="icon-bold"></i></a>
+            <a class="btn btn-default btn-sm" data-edit="italic" title="Italic (Ctrl/Cmd+I)"><i class="icon-italic"></i></a>
+            <a class="btn btn-default btn-sm" data-edit="strikethrough" title="Strikethrough"><i class="icon-strikethrough"></i></a>
+            <a class="btn btn-default btn-sm" data-edit="underline" title="Underline (Ctrl/Cmd+U)"><i class="icon-underline"></i></a>
+          </div>
+          <div class="btn-group">
+            <a class="btn btn-default btn-sm" data-edit="insertunorderedlist" title="Bullet list"><i class="icon-list-ul"></i></a>
+            <a class="btn btn-default btn-sm" data-edit="insertorderedlist" title="Number list"><i class="icon-list-ol"></i></a>
+            <a class="btn btn-default btn-sm" data-edit="outdent" title="Reduce indent (Shift+Tab)"><i class="icon-indent-left"></i></a>
+            <a class="btn btn-default btn-sm" data-edit="indent" title="Indent (Tab)"><i class="icon-indent-right"></i></a>
+          </div>
+          <div class="btn-group">
+            <a class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown" title="Hyperlink"><i class="icon-link"></i></a>
+            <div class="dropdown-menu input-append" style="width:230px">
+              <input class="span3" placeholder="URL" type="text" data-edit="createLink"/>
+              <button class="btn" type="button">Add</button>
+            </div>
+            <a class="btn btn-default btn-sm" data-edit="unlink" title="Remove Hyperlink"><i class="icon-cut"></i></a>
+          </div>
+          <div class="btn-group">
+             <a class="btn btn-default btn-sm"  title="Insert picture (or just drag & drop)" id="pictureBtn"><i class="icon-picture"></i></a>
+            <input type="file" data-role="magic-overlay" data-target="#pictureBtn" data-edit="insertImage" style="opacity: 0; position: absolute; top: 0px; left: 0px; width: 41px; height: 34px;"/>
+          </div>
+          <div class="btn-group">
+            <a class="btn btn-default btn-sm" data-edit="undo" title="Undo (Ctrl/Cmd+Z)"><i class="icon-undo"></i></a>
+            <a class="btn btn-default btn-sm" data-edit="redo" title="Redo (Ctrl/Cmd+Y)"><i class="icon-repeat"></i></a>
+          </div>
+        </div>
+        <div class="answer-edit-wrap">
+          <div id="editor" class="answer-edit-area">
+              Go ahead&hellip;
+          </div>
+        </div>
+         <div class="comment-action-area comment-append-action">
+              <a href="#" class="btn btn-primary btn-sm" role="button" id="subAnswer">发布答案</a>
+              <a href="#" class="btn btn-primary btn-sm" role="button" id="getAnswer">答案</a>
+        </div>
+        </div>
+        </div>
+
+        </div><!-- /.blog-main -->
+
+        <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+          <div class="sidebar-module sidebar-module-inset">
+            <h4>About</h4>
+            <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
+          </div>
+          <div class="sidebar-module">
+            <h4>Archives</h4>
+            <ol class="list-unstyled">
+              <li><a href="#">January 2014</a></li>
+              <li><a href="#">December 2013</a></li>
+              <li><a href="#">November 2013</a></li>
+              <li><a href="#">October 2013</a></li>
+              <li><a href="#">September 2013</a></li>
+              <li><a href="#">August 2013</a></li>
+              <li><a href="#">July 2013</a></li>
+              <li><a href="#">June 2013</a></li>
+              <li><a href="#">May 2013</a></li>
+              <li><a href="#">April 2013</a></li>
+              <li><a href="#">March 2013</a></li>
+              <li><a href="#">February 2013</a></li>
+              <li><input type="button" id="test"></li>
+            </ol>
+          </div>
+          <div class="sidebar-module">
+            <h4>Elsewhere</h4>
+            <ol class="list-unstyled">
+              <li><a href="#">GitHub</a></li>
+              <li><a href="#">Twitter</a></li>
+              <li><a href="#">Facebook</a></li>
+            </ol>
+          </div>
+        </div><!-- /.blog-sidebar -->
+
+      </div><!-- /.row -->
+
+    </div><!-- /.container -->
+
+    <div class="blog-footer">
+      <p>Blog template built for <a href="http://getbootstrap.com">Bootstrap</a> by <a href="https://twitter.com/mdo">@mdo</a>.</p>
+      <p>
+        <a href="#">Back to top</a>
+      </p>
+    </div>
+
+<div class="modal fade" id="quest" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close btn-large" data-dismiss="modal" aria-hidden="true" style="margin-top:-10px;">&times;</button>
+        <h4 class="modal-title" id="myModalLabel" style="margin-top:-10px">提问</h4>
+      </div>
+      <div class="modal-body">
+    <form role="form">
+      <div class="form-group">
+        <input type="text" class="form-control" id="question-title" placeholder="写下你的问题">
+      </div>
+      <div class="form-group">
+                <label>问题说明（可选）：</label>
+        <textarea class="form-control" id="question-content" rows="4"></textarea>
+            </div>
+            <div class="form-group">
+        <div>
+          <span style="float:right">话题越精准，越容易让领域专业人士看到你的问题</span>选择话题
+        </div>
+                <input type="text" class="form-control" id="question-category" placeholder="搜索话题">
+            </div>
+      <div class="form-actions" >
+        <div class="question-action">
+          <a href="#" class="btn" data-dismiss="modal" >关闭</a>
+          <a href="#" class="btn btn-primary"  id="questionBtn">发布</a>
+        </div>
+      </div>
+      
+      
+    </form>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+  </div>
+<div class="modal fade" id="topic" tabindex="-1" role="dialog"  aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" >提问</h4>
+      </div>
+       <form role="form">
+	  <div class="form-group">
+		<label  for="topic_title">标题</label>
+			<input type="text" name="topic_title" id="topic_title"  class="form-control" placeholder="标题">
+	</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="topicBtn">添加</button>
+      </div>
+    </form>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="/static/js/jquery-1.9.0.js" ></script>
+    <script src="/static/js/jquery.autocomplete.js" ></script>
+    <script src="/static/js/bootstrap.min.js" ></script>
+    <script src="/static/js/external/jquery.hotkeys.js"></script>
+    <script src="/static/js/external/google-code-prettify/prettify.js"></script>
+    <script type="text/javascript" src="/static/js/bootstrap-wysiwyg.js"></script>
+    <!--<script src="/static/js/main.js" ></script>-->
+    <script src="/static/js/tab.js"></script>
+	  <script src="/static/js/csrf.js"></script>
+	  <script src="/static/js/modal.js"></script>
+    <script type="text/javascript">
+      $(function(){
+          $("#add").bind("click",addComment);
+          $("#subAnswer").bind('click',addAnswer);
+          $("#getAnswer").bind('click',getAnswer);
+      })
+      function addAnswer(){
+          var content=$("#editor").html();
+          var question_id=$(".container[role=main]").attr("data-token");
+          $.ajax({
+        url: 'add/answer',
+        type: 'post',
+        dataType: 'text',
+        data: {content:content,questionid:question_id}
+      })
+      .done(function() {
+        alert("添加成功")
+      })
+      .fail(function(aa,bb,cc) {
+        alert("失败")
+        console.log("error");
+      })
+      .always(function() {
+        console.log("complete");
+      });
+
+
+      }
+      function getAnswer(){
+          $.ajax({
+        url: '/question/1/answers',
+        type: 'get',
+        dataType: 'text'
+      })
+      .done(function(aa) {
+        alert(aa)
+        alert("添加成功")
+      })
+      .fail(function(aa,bb,cc) {
+        alert("失败")
+        console.log("error");
+      })
+      .always(function() {
+        console.log("complete");
+      });
+
+      }
+      function addComment(){
+      }
+
+    </script>
+	 <script  type="text/javascript">
+        $(function() {
+        function initToolbarBootstrapBindings() {
+         var fonts = ['Serif', 'Sans', 'Arial', 'Arial Black', 'Courier',
+                 'Courier New', 'Comic Sans MS', 'Helvetica', 'Impact', 'Lucida Grande', 'Lucida Sans', 'Tahoma', 'Times',
+                 'Times New Roman', 'Verdana'
+             ],
+             fontTarget = $('[title=Font]').siblings('.dropdown-menu');
+         $.each(fonts, function(idx, fontName) {
+             fontTarget.append($('<li><a data-edit="fontName ' + fontName + '" style="font-family:\'' + fontName + '\'">' + fontName + '</a></li>'));
+         });
+         $('a[title]').tooltip({
+             container: 'body'
+         });
+         $('.dropdown-menu input').click(function() {
+             return false;
+         })
+             .change(function() {
+                 $(this).parent('.dropdown-menu').siblings('.dropdown-toggle').dropdown('toggle');
+             })
+             .keydown('esc', function() {
+                 this.value = '';
+                 $(this).change();
+             });
+         $('[data-role=magic-overlay]').each(function() {
+             var overlay = $(this),
+                 target = $(overlay.data('target'));
+             overlay.css('opacity', 0).css('position', 'absolute').offset(target.offset()).width(target.outerWidth()).height(target.outerHeight());
+         });
+         if ("onwebkitspeechchange" in document.createElement("input")) {
+             var editorOffset = $('#editor').offset();
+             $('#voiceBtn').css('position', 'absolute').offset({
+                 top: editorOffset.top,
+                 left: editorOffset.left + $('#editor').innerWidth() - 35
+             });
+         } else {
+             $('#voiceBtn').hide();
+         }
+     };
+
+     function showErrorAlert(reason, detail) {
+         var msg = '';
+         if (reason === 'unsupported-file-type') {
+             msg = "Unsupported format " + detail;
+         } else {
+             console.log("error uploading file", reason, detail);
+         }
+         $('<div class="alert"> <button type="button" class="close" data-dismiss="alert">&times;</button>' +
+             '<strong>File upload error</strong> ' + msg + ' </div>').prependTo('#alerts');
+     };
+     initToolbarBootstrapBindings();
+     $('#editor').wysiwyg({
+         fileUploadError: showErrorAlert
+     });
+     window.prettyPrint && prettyPrint();
+    });
+    </script>
+  </body>
+</html>

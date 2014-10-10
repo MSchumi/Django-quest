@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+{% load eventtag %}
+    {% block css%}
+    <link href="/static/css/userinfo.css" rel="stylesheet">
+    {% endblock %}
+    {% block container %}
+    <div class="container user" role="main" data-token="{{userinfo.id}}">
+        <div class="row">
+            {% block main%}
+            <div class="col-sm-8 blog-main">
+                <div class="main-container">
+                <div class="user-container">
+                        <div class="userinfo-main" >
+                            <div class="top" >
+                                <span>{{userinfo.get_full_name}}</span>
+                            </div>
+                            <div class="body">
+                                <div class="user-avatar">
+                                    <img src="{{userinfo.avatar}}" class="user-img">
+                                </div>
+                                {% if is_self%}
+                                <form method="post" style="display:none" action="../upload/image/" target="avtar_up_frame" enctype="multipart/form-data" >
+                                {% csrf_token %}
+                                    <input type="file" name="avat_file" id="avat_file" accept="image/*"  /> 
+                                    <input type="text" value="111" />
+                                    <input type="submit" value="上传"/> 
+                                </form>
+                                {%endif%}
+                                <div class="user-data" >
+                                    <div class="items">
+                                        <div class="item">
+                                            <i class="icon"></i>
+                                            <span class="wrap">
+                                                <span>居住地</span>
+                                                <span>行业</span>
+                                                <span>性别</span>
+                                            </span>
+                                        </div>
+                                         <div class="item">
+                                            <i class="icon"></i>
+                                            <span class="wrap">
+                                                <span>居住地</span>
+                                                <span>行业</span>
+                                                <span>性别</span>
+                                            </span>
+                                        </div>
+                                         <div class="item">
+                                            <i class="icon"></i>
+                                            <span class="wrap">
+                                                <span>居住地</span>
+                                                <span>行业</span>
+                                                <span>性别</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="user-description">
+                                        <span class="info-empty-wrap">填写个人简介</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="user-op clearfix">
+                            <div class="user-op-list">
+                                <span>获得</span>
+                                <span>赞同</span>
+                            </div>
+                            <a class="user-description-link">
+                                <i></i>
+                                编辑我的个人资料
+                            </a>
+                        </div>
+                        <div class="user-navbar clearfix">
+                            <a class="nav-item first">
+                                <i class="icon"></i>
+                                <span>主页</span>
+                            </a>
+                             <a class="nav-item">
+                                提问
+                                <span class="num">{{statistics.submit_question}}</span>
+                            </a>
+                             <a class="nav-item">
+                                回答
+                                <span>{{statistics.answer}}</span>
+                            </a>
+                             <a class="nav-item">
+                                收藏
+                                <span>3</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ask-container-wrap">
+                        <div class="ask-container-head">
+                            <span class="title">最新动态</span>
+                        </div>
+                        <div class="ask-container-body">
+                            <div class="content-list">
+                                {% for event in events_list %}
+                                <div class="content-item">
+                                    <span class="content-time">{{event.addtime|eventtime}}</span>
+
+                                    <span class="op-type">{{event.eventtype|eventtype:event.data}}</span>
+                                    <div>
+                                        {% event_html events_list %}
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endblock %}
+            {% block side %}
+            <div class="col-sm-3 blog-sidebar">
+                {% if not is_self %}<div>
+                    <button class="btn follow-user {% if not is_followed %}btn-success">关注{% else %}btn-default followed">取消关注{% endif %}</button>
+                </div>
+                {% endif %}
+                <div class="sidebar-module sidebar-module-inset">
+                    <h4>About</h4>
+                    <p>Etiam porta
+                        <em>sem malesuada magna</em>mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
+                </div>
+            </div>
+            {% endblock %}
+        </div>
+        <!-- /.row -->
+    </div>
+     {% if is_self%}
+     <iframe  name="avtar_up_frame" src="about:blank" id="avtar_up_frame" class="avatar_up_frame"></iframe>
+     {% endif %}
+    {%  endblock %}
+    {% block js %}
+    <script src="/static/js/userinfo.js"></script>
+    {% endblock %}
+</html>

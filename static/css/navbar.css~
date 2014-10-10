@@ -1,0 +1,31 @@
+body {
+  padding-top: 70px;
+}
+
+.nav-theme{
+		  text-shadow: 0 -1px 0 rgba(0,0,0,.15);
+          background-color: #0666c5;
+          border-color: #463265;
+          box-shadow: 0 1px 0 rgba(255,255,255,.1);
+}
+.nav-active{
+color:#fff;
+font-size:150%;
+}
+.nav-active:hover{
+color:#fff;
+text-decoration: none;
+}
+.nav-container{
+margin-left:auto;
+margin-right:auto;
+padding-left:150px;
+
+}
+.container{
+margin-top:50px;
+}
+#nav-search{
+width:300px;
+
+}

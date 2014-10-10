@@ -1,0 +1,13 @@
+{% for user in data %}
+<div class="result_item" style="min-height:80px">
+	<a class="user_link" target="_blank" href="{{user.get_absolute_url}}">
+		<img src="{{user.avatar}}" class="user_avatar"></img>
+	</a>
+	<div class="user_info">
+		<a href="{{user.get_absolute_url}}" target="_blank"><span>{{user.get_full_name}}</span><a>
+		<div class="search_panel">
+			<!-- <a>6个回答</a><a>100个关注</a> -->
+		</div>
+	</div>
+</div>
+{% endfor %}

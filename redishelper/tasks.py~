@@ -1,0 +1,47 @@
+#coding=utf-8
+from time import sleep
+import redis
+from celery.task import task
+
+from redishelper import connect
+
+USER_DB_NUM=1
+TIME_LINE_DB_NUM=2
+USER_FOLLOWER_PREFIX="follower:"
+USER_ACTIVITY_PREFIX="activity:"
+USER_MESSAGE_PREFIX="message:"
+USER_EVENT_PREFIX="event:"
+USER_ACTIVITY_TIME_LINE_PREFIX="activity_time_line:"
+USER_MESSAGE_TIME_LINE_PREFIX="message_time_line:"
+USER_EVENT_TIME_LINE_PREFIX="event_time_line:"
+CURRENT_ACTIVITY_ID_PREFIX="current_activity_id"
+CURRENT_EVENT_ID_PREFIX="current_event_id"
+CURRENT_MESSAGE_ID_PREFIX="current_message_id"
+
+@task()
+def push_activity(user_id,activity_type,content_id,addtime):
+    client=connect(USER_DB_NUM)
+    followers=client.smembers(USER_FOLLOWER_PREFIX+str(user_id))
+    for follower in followers:
+        add_to_activity_timeline(follower,activity_type,content_id,addtime)
+@task()
+def push_message(info_dict):
+    if info_dict["activity_type"]==6:
+        tuser_id=info_dict["tuser_id"]
+
+def add_to_message_timeline(user_id,info_dict):
+
+
+def add_to_activity_timeline(user_id,activity_type,content_id,addtime):
+    client=connect(TIME_LINE_DB_NUM)
+    next_activity_id=get_next_activity_id()
+    client.lpush(USER_ACTIVITY_TIME_LINE_PREFIX+str(user_id),next_activity_id)
+    client.hset(USER_ACTIVITY_PREFIX+str(next_activity_id),{"id":next_activity_id,"activity_type":activity_type,"content_id":content_id,"addtime":\
+            addtime.strftime(TIME_STRF)})
+    return True
+
+    
+
+
+
+

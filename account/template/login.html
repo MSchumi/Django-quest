@@ -1,0 +1,115 @@
+﻿{% extends 'base.html' %}
+    {% block css %}
+    <link href="/static/css/signin.css"  rel="stylesheet">
+    <link href="/static/css/main.css" rel="stylesheet">
+    {% endblock  %}
+  	{% block container %}
+    <div class="container">
+    	<div class="login-container">
+			<div class="tab-pane" id="register" >
+				<div class="form-signin">
+					<div class="form-title float-left">快速注册呵呵</div>
+					<div class="form-change float-right">登录
+					<i class="icon-arrow-right"></i></div>
+				</div>
+				<form class="form-signin" role="form" action="/account/register/" method="post">{% csrf_token %}
+					<div class="form-group mbottom10 height45">
+						<input id="register-surname" name="surname" type="text" class="form-control width120 float-left" placeholder="姓"  autocomplete='off'  required autofocus/>
+                        <input id="register-username" name="name" type="text" class="form-control width120 float-right" placeholder="名"  autocomplete='off'  required />
+					</div>
+					
+					<div class="input-group mbottom10 height45">
+						<span class="input-group-addon">邮箱:</span>
+						<input id="register-email" name="email" type="email" class="form-control" placeholder="Email地址" required/>
+						<span id="register-message"></span>
+					</div>
+					<div class="input-group mbottom10 height45">
+						<span class="input-group-addon">密码:</span>
+						<input id="register-pwd" name="password" type="password" class="form-control" placeholder="Password" required/>
+					</div>
+					<button class="btn btn-lg btn-primary btn-block" type="button"  id="register-btn" onclick="register()">注册</button>
+				</form>
+			</div>
+			<div class="tab-pane hidden" id="signin" > 
+				<div class="form-signin">
+					<div class="form-title float-left">登录呵呵</div>
+					<div class="form-change float-right">注册
+					<i class="icon-arrow-right"></i></div>
+				</div>     
+				<form class="form-signin" role="form" action="/account/login/" method="post">{% csrf_token %}
+					<div class="input-group mbottom10 height45">
+						<span class="input-group-addon">邮箱:</span>
+						<input id="login-email" name="email" type="email" class="form-control" placeholder="Email地址" required/>
+						<span id="login-message"></span>
+					</div>
+					<div class="input-group height45">
+						<span class="input-group-addon">密码:</span>
+						<input id="login-pwd" name="password" type="password" class="form-control" placeholder="Password" required/>
+					</div>
+					<label class="checkbox">
+						<input type="checkbox" value="remember-me"> Remember me
+					</label>
+					<button id="login-btn"  type="button"  class="btn btn-lg btn-primary btn-block" onclick="login()" >登陆</button>
+				</form>
+			</div>
+		<div>
+	</div>
+	{% endblock %}
+	{% block footer %}
+	{% endblock %}
+	{% block js %}
+	<script type="text/javascript">
+	$(function (argument) {
+		var search=window.location.search
+		var reg=new RegExp("\\?login");
+		if (reg.test(search)){
+			$("#signin").removeClass('hidden')
+			$("#register").addClass('hidden')
+		}
+	})
+	function register () {
+		var data={
+			"email":$("#register-email").val(),
+			"password":$("#register-pwd").val(),
+			"name":$("#register-username").val(),
+			"surname":$("#register-surname").val()
+		}
+		$.ajax({
+			url:"/account/register/",
+			type:"post",
+			data:data
+		}).done(function  (result) {
+			var result=$.parseJSON(result)
+			if(result.status=="fail"){
+			alert(result.message)
+			}
+			else{
+				window.location.href="http://"+window.location.host+"/question/"
+			}
+		}).fail(function (result) {
+		
+		})
+	}
+	function login () {
+		var data={
+			"email":$("#login-email").val(),
+			"password":$("#login-pwd").val(),
+		}
+		$.ajax({
+			url:"/account/login/",
+			type:"post",
+			data:data
+		}).done(function  (result) {
+			var result=$.parseJSON(result)
+			if(result.status=="fail"){
+			alert(result.message)
+			}
+			else{
+				window.location.href="http://"+window.location.host+"/question/"
+			}
+		}).fail(function (result) {
+		
+		})
+	}
+	</script>
+	{% endblock %}

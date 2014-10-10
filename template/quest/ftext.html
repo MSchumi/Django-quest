@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="assets/ico/favicon.ico">
+    
+    <title>F1论坛</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap theme -->
+    <!-- Custom styles for this template -->
+    <link href="/static/css/navbar.css" rel="stylesheet">
+    <link href="/static/css/jquery.autocomplete.css" rel="stylesheet">
+    <link href="/static/css/tcss.css" rel="stylesheet">
+    <link href="/static/css/external/prettify.css" rel="stylesheet">
+    <link href="/static/css/font-awesome.css" rel="stylesheet">
+    <link href="/static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/static/css/question.css">
+    <!-- Just for debugging purposes. Don't actually copy this line! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+
+        function test (argument) {
+           alert();
+        }
+        
+
+function setImagePreview(fileObj, previewObj, localImg) {
+    var docObj=document.getElementById(fileObj);
+    var imgObjPreview=document.getElementById(previewObj);
+    if(docObj.files && docObj.files[0]){
+        //火狐下，直接设img属性
+        imgObjPreview.style.display = 'block';
+        imgObjPreview.style.width = '120px';
+        imgObjPreview.style.height = '80px';
+        //imgObjPreview.src = docObj.files[0].getAsDataURL();
+
+
+        //火狐7以上版本不能用上面的getAsDataURL()方式获取，需要一下方式  
+        imgObjPreview.src = window.URL.createObjectURL(docObj.files[0]);
+    }else{
+        //IE下，使用滤镜
+        docObj.select();
+        var imgSrc = document.selection.createRange().text;
+        var localImagId = document.getElementById(localImg);
+        //必须设置初始大小
+        localImagId.style.width = "120px";
+        localImagId.style.height = "80px";
+        //图片异常的捕捉，防止用户修改后缀来伪造图片
+        try{
+            localImagId.style.filter="progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)";
+            localImagId.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = imgSrc;
+        }catch(e){
+            alert("您上传的图片格式不正确，请重新选择!");
+            return false;
+        }
+        imgObjPreview.style.display = 'none';
+        document.selection.empty();
+    }
+    return true;
+}
+    </script>
+	 <style>
+
+  </style>
+  </head>
+     <body>
+                <input type=file name="doc" id="doc" onchange="javascript:setImagePreview();">
+<p>
+<div id="localImag"><img id="preview" width=-1 height=-1 style="diplay:none" /></div>
+</p>
+<script>
+function setImagePreview() {
+        var docObj=document.getElementById("doc");
+ 
+        var imgObjPreview=document.getElementById("preview");
+                if(docObj.files &&    docObj.files[0]){
+                        //火狐下，直接设img属性
+                        imgObjPreview.style.display = 'block';
+                        imgObjPreview.style.width = '300px';
+                        imgObjPreview.style.height = '120px';                    
+                        //imgObjPreview.src = docObj.files[0].getAsDataURL();
+
+
+      //火狐7以上版本不能用上面的getAsDataURL()方式获取，需要一下方式  
+      imgObjPreview.src = window.URL.createObjectURL(docObj.files[0]);
+
+
+                }else{
+                        //IE下，使用滤镜
+                        docObj.select();
+                        var imgSrc = document.selection.createRange().text;
+                        var localImagId = document.getElementById("localImag");
+                        //必须设置初始大小
+                        localImagId.style.width = "300px";
+                        localImagId.style.height = "120px";
+                        //图片异常的捕捉，防止用户修改后缀来伪造图片
+try{
+                                localImagId.style.filter="progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)";
+                                localImagId.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = imgSrc;
+                        }catch(e){
+                                alert("您上传的图片格式不正确，请重新选择!");
+                                return false;
+                        }
+                        imgObjPreview.style.display = 'none';
+                        document.selection.empty();
+                }
+                return true;
+        }
+</script>
+</body>
+</html>
+
+
+</html>

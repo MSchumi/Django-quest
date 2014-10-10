@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block css%}
+<link href="/static/css/notification.css" rel="stylesheet">
+{% endblock %}
+        {% block main %}
+        <input type="hidden" id="messagetype" value="{{notification_type}}" >
+        <div class="col-sm-8 blog-main">
+          <ul class="nav nav-tabs" role="tablist" id="message-tab">
+            <li id="unread_tab" type="unread" role="presentation"><a href="javascript:">未读</a></li>
+            <li id="all_tab" type="all" role="presentation"><a href="javascript:">全部</a></li>
+          </ul>
+          <div class="result-list" id="result-list">
+          {% include "message_list.html" %}
+          </div>
+          {% if count %}
+          <button type="button" id="more-message" {% if count %} data-count="{{count}}"  end-time="{{endtime|date:'Y/m/d H:i:s'}}" {% endif%} class="btn btn-default more-data" style="width:100%">更多</button>
+          {% endif %}
+        </div><!-- /.blog-main -->
+        {% endblock %}
+        {% block side %}
+        
+        {% endblock %}
+   {% block js %}
+    <script src="/static/js/message.js" ></script>
+    {% endblock %}
+
