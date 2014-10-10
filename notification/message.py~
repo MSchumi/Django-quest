@@ -1,6 +1,0 @@
-#coding=utf-8
-
-class MessageMiddleware(object):
-    def process_response(self,request,response):
-        import pdb;pdb.set_trace()
-        return response
