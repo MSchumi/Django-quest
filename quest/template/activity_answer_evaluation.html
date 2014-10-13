@@ -7,9 +7,9 @@
     <span class="content-time">{{activity.addtime|eventtime}}</span>
     <span class="op-type">
         <a href="{{fuser.get_absoulte_url}}">{{fuser.get_full_name}}</a>{{activity.activitytype|eventtype:activity.data}}</span>
-<div class="question-title" data-token={{answer.question.id}}>
+<div class="question-title" data-token={{evaluation.answer.question.id}}>
     <h2 class="question-title-content">
-        <a href="{{answer.question.get_absolute_url}}">{{answer.question.title}}</a>
+        <a href="{{evaluation.answer.question.get_absolute_url}}">{{evaluation.answer.question.title}}</a>
     </h2>
 </div>
 <div class="answer-item" data-token="{{evaluation.answer.id}}">
@@ -39,8 +39,8 @@
         <div class="answer-anthor">
             <h3 class="answer-anthor-wrap">
                 <a class="answer-anthor-link-avatar" href="#">
-                    <img class="answer-anthor-avatar" src='/static/image/msc.jpg'>
-                    </img>
+                   <!--  <img class="answer-anthor-avatar" src='/static/image/msc.jpg'>
+                    </img> -->
                 </a>
                 <a>
                     {{evaluation.answer.user.surname}}{{evaluation.answer.user.name}}

@@ -4,7 +4,7 @@
 	<a href="/account/userinfo/{{message.content.user_id}}">{{message.content.user_name}}</a>
 	{% if message.status %} {% endif %}
 	<span {% if message.status %} class="read-message" {% endif %}>{{message.message_type|messagetype:message.content}}</span>
-	<span {% if message.status %} class="read-message" {% endif %}>{{message|messagecontent|safe}}</span>
+	<span {% if message.status %} class="read-message" {% endif %}>{{message|messagecontent|safe|truncatewords:30}}</span>
 	<span style="float:right">{{message.addtime|date:'Y-m-d'}}</span>
 </div>
 {% endfor %}

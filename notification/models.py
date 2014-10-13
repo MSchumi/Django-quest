@@ -15,7 +15,7 @@ class MessageManager(models.Manager):
         try:
             f=cursor.executemany(sql, value_list)
             k=transaction.commit_unless_managed()
-            import pdb;pdb.set_trace()
+            #import pdb;pdb.set_trace()
             return True
         except Exception as e:
             print e

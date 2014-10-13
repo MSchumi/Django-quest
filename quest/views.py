@@ -29,6 +29,7 @@ from redishelper.timeline_util import get_activities_list
 
 def main(request):
     "主页面加载 如果用户登录并且有关注好友,则加载好友动态，否则加载回答数量最多的问题"
+    #raise Exception("测试")
     if request.user.is_authenticated(): 
         activity_list=get_activities_list(request.user.id,0,15)
         if len(activity_list["activity_list"])>0:
@@ -252,7 +253,7 @@ def search_results(request):
         else:
             solr=QuestionSolr()
         data=solr.search_by_keyword(q)
-        return render_to_response('search.html',{'searchword':q,'searchtype':searchtype,'data':data})
+        return render_to_response('search.html',{'searchword':q,'searchtype':searchtype,'data':data},context_instance=RequestContext(request))
     return HttpResponse()
 
 

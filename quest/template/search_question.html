@@ -5,9 +5,9 @@
 	</div>
 	{% if question.answer %}
 	<div class="answer-part">
-		<span class="favour-count">{{question.answer.favourcount}}票</span>&nbsp;&nbsp;
+		<span class="favour-count">1{{question.answer.favourcount}}票</span>&nbsp;&nbsp;
 		<a href="{{question.answer.user.get_absolute_url}}"><span class="answer-user">{{question.answer.user.get_full_name}}</span></a>：
-		<span class="answer_summary">{{question.answer.content}}</span>
+		<span class="answer_summary">{{question.answer.content|safe|truncatewords:15}}</span>
 		<a target="_blank" href="{{question.get_absolute_url}}" class="check">查看</a>
 	</div>
 	{% endif %}

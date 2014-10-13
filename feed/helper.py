@@ -25,7 +25,6 @@ def submit_question(obj,user,**kwargs):
 def submit_answer(obj,user,**kwarg):
     """ 回答问题后向好友分发,同时插入solr """
     try:
-        import pdb;pdb.set_trace()
         question=kwarg.get("question")
         content_dict={"question_id":question.id,"question_title":question.title,"question_user_id":question.user.id,"user_id":user.id,\
                 "user_name":user.surname+user.name}

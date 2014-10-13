@@ -16,7 +16,10 @@ import logging
 logging.basicConfig(
 level = logging.DEBUG,
 format = '%(asctime)s %(levelname)s %(module)s.%(funcName)s Line:%(lineno)d%(message)s',
+filename = 'filelog.log',  
 )
+
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/

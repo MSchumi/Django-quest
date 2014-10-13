@@ -8,8 +8,8 @@ function search ($e) {
  	$("#message-tab").find('li').removeClass('active')
  	$this.addClass('active');
    	var location=window.location;
+ 
    	window.location.href=location.protocol+"//"+location.host+"/question/search/?q="+$("#searchword").val()+"&type="+$this.attr('type');
-
 }
 
 $(function () {
