@@ -109,3 +109,4 @@ follow_question_done.connect(follow_question,sender=QustionFollow)
 register_user_done.connect(register_user,sender=User)
 follow_user_done.connect(follow_user,sender=UserFollow)
 comment_submit_done.connect(submit_comment,sender=Comment)
+

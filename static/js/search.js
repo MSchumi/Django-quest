@@ -5,14 +5,14 @@ $(function  (argument) {
 function search ($e) {
 	$e.preventDefault();
  	var $this=$(this);
- 	$("#message-tab").find('li').removeClass('active')
+ 	$("#search-tab").find('li').removeClass('active')
  	$this.addClass('active');
    	var location=window.location;
- 
    	window.location.href=location.protocol+"//"+location.host+"/question/search/?q="+$("#searchword").val()+"&type="+$this.attr('type');
+
 }
 
 $(function () {
-	var searchType=$("#messagetype").val();
-	$("#message-tab").find("li[type="+searchType+"]").addClass('active')
+	var searchType=$("#searchtype").val();
+	$("#search-tab").find("li[type="+searchType+"]").addClass('active')
 })
